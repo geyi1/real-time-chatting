@@ -26,9 +26,11 @@ function appendUser(username) {
   tag.innerHTML = `${username}`;
   var userList = document.getElementById("users");
   userList.appendChild(tag);
+}
 
-  //   var roomList = document.getElementById("room-name");
-  //   roomList.innerHTML = `${info.room}`;
+function joinRoom(room) {
+  var roomList = document.getElementById("room-name");
+  roomList.innerHTML = `${room}`;
 }
 
 function deleteUser(username) {
@@ -65,17 +67,10 @@ socket.on("chat message", (messageInfo) => {
 
 socket.on("new user", (users) => {
   console.log("appending new user");
-  appendUsers(
-    users.map((each) => {
-      return each.username;
-    })
-  );
+  appendUsers(users.userList);
+  joinRoom(users.room);
 });
 
 socket.on("delete user", (username) => {
   deleteUser(username);
 });
-
-// socket.on("disconnect", (info) => {
-//     console.lo
-// })
