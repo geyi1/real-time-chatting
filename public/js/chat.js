@@ -19,6 +19,15 @@ function appendChatMessage(messageInfo) {
   `;
   tag.innerHTML = htmlString;
   chatMessages.appendChild(tag);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function appendRawMessage(msg) {
+  var tag = document.createElement("div");
+  var htmlString = `<p class="text" style="margin-bottom: 7px">${msg}</p>`;
+  tag.innerHTML = htmlString;
+  chatMessages.appendChild(tag);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 function appendUser(username) {
@@ -73,4 +82,8 @@ socket.on("new user", (users) => {
 
 socket.on("delete user", (username) => {
   deleteUser(username);
+});
+
+socket.on("admin message", (msg) => {
+  appendRawMessage(msg);
 });

@@ -24,6 +24,7 @@ io.on("connect", (socket) => {
   socket.on("disconnect", () => {
     console.log("a user disconnected");
     let username = removeUser(socket.id);
+    io.emit("admin message", `${username} has left the chat`);
     io.emit("delete user", username);
   });
   socket.on("new user", (info) => {
@@ -31,6 +32,10 @@ io.on("connect", (socket) => {
     socket.join(info.room);
     addUser(info, clientId);
     let userList = getRoomUsers(info.room);
+    io.to(info.room).emit(
+      "admin message",
+      `${info.username} has joined the chat`
+    );
     io.to(info.room).emit("new user", { room: info.room, userList });
   });
   socket.on("chat message", (msg) => {
