@@ -14,7 +14,7 @@ function appendChatMessage(messageInfo) {
   var tag = document.createElement("div");
   tag.classList.add("message");
   var htmlString = `
-    <p class="meta">${messageInfo.username}<span> 10:00 PM </span></p>
+    <p class="meta">${messageInfo.username}<span> ${messageInfo.timestamp} </span></p>
     <p class="text">${messageInfo.msg}</p>
   `;
   tag.innerHTML = htmlString;
@@ -59,7 +59,7 @@ form.addEventListener("submit", (event) => {
   }
 });
 
-socket.on("message", (messageInfo) => {
+socket.on("chat message", (messageInfo) => {
   appendChatMessage(messageInfo);
 });
 

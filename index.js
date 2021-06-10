@@ -4,6 +4,7 @@ const {
   removeUser,
   findUser,
 } = require("./helpers/users");
+const {getTimeInAmPm} = require('./helpers/time');
 
 const express = require("express");
 const app = express();
@@ -33,7 +34,8 @@ io.on("connect", (socket) => {
   socket.on("chat message", (msg) => {
     let messageInfo = findUser(socket.id);
     messageInfo.msg = msg;
-    io.emit("message", messageInfo);
+    messageInfo.timestamp = getTimeInAmPm();
+    io.emit("chat message", messageInfo);
   });
 });
 
